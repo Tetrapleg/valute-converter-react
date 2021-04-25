@@ -1,24 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, makeStyles } from '@material-ui/core';
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
+import { Converter } from './components/main/converter/Converter';
+import { ValuteList } from './components/main/valutes/ValuteList';
+
+const useStyles = makeStyles({
+  container: {
+    padding: "15px 15px",
+  },
+  navLink: {
+    padding: "5px 20px",
+    textDecoration: "none",
+  }
+});
+
+const ContentWrapper = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+`;
 
 function App() {
+  const styles = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+      <ContentWrapper >
+        <Container 
+          className={styles.container}
+          fixed
+          maxWidth="xs"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <NavLink
+            className={styles.navLink}
+            exact to="/"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "red"
+            }}
+          >Список валют</NavLink>
+          <NavLink 
+            className={styles.navLink}
+            to="/converter"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "red"
+            }}
+          >Конвертер</NavLink>
+        </Container>
+        <Switch >
+          <Route exact path="/" component={ValuteList} />
+          <Route path="/converter" component={Converter} />
+        </Switch>
+      </ContentWrapper>
+    </BrowserRouter>
   );
 }
 
